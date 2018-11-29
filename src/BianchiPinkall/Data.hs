@@ -1,5 +1,5 @@
 module BianchiPinkall.Data where
-import           Data.Array                   (Array, (!), array, elems)
+import           Data.Array                   (Array, (!), array)
 import qualified Data.Array                   as A
 import           Graphics.Rendering.OpenGL.GL (Normal3 (..), Vertex3 (..))
 
@@ -8,10 +8,13 @@ type Vector = (Double, Double, Double)
 type NPoint = (Vertex3 Double, Normal3 Double)
 type NTriangle = (NPoint, NPoint, NPoint)
 
+norm :: Floating a => (a,a,a) -> a
+norm (x,y,z) = sqrt(x*x + y*y + z*z)
+
 normalize :: Floating a => (a,a,a) -> (a,a,a)
 normalize (x,y,z) = (x/n,y/n,z/n)
   where
-    n = sqrt(x*x+y*y+z*z)
+    n = norm (x,y,z)
 
 frac :: Int -> Int -> Double
 frac p q = realToFrac p / realToFrac q
@@ -22,8 +25,13 @@ pointToVertex3 (x,y,z) = Vertex3 x y z
 vectorToNormal3 :: Vector -> Normal3 Double
 vectorToNormal3 (x,y,z) = Normal3 x y z
 
-norm :: Point -> Double
-norm (x,y,z) = sqrt(x*x + y*y + z*z)
+crossProd :: Floating a => (a,a,a) -> (a,a,a) -> (a,a,a)
+crossProd (v1,v2,v3) (w1,w2,w3) =
+  (
+  v2*w3 - v3*w2,
+  v3*w1 - v1*w3,
+  v1*w2 - v2*w1
+  )
 
 -- modified stereographic projection
 stereom :: (Double,Double,Double,Double) -> Point
@@ -46,19 +54,17 @@ allVertices :: (Double -> Double -> Point) -> (Int,Int)
             -> Array (Int,Int) Point
 allVertices f (n_u,n_v) = array ((0,0), (n_u-1,n_v-1)) associations
   where
-  u_ = [2*pi * frac i n_u | i <- [0 .. nu-1]]
-  v_ = [2*pi * frac i n_v | i <- [0 .. nv-1]]  
+  u_ = [2*pi * frac i n_u | i <- [0 .. n_u-1]]
+  v_ = [2*pi * frac i n_v | i <- [0 .. n_v-1]]  
   indices = [(i,j) | i <- [0 .. n_u-1], j <- [0 .. n_v-1]]
   g (i,j) = ((i,j), f (u_ !! i) (v_ !! j))
   associations = map g indices
 
 triangleNormal0 :: (Point, Point, Point) -> Vector
-triangleNormal0 ((x1,x2,x3), (y1,y2,y3), (z1,z2,z3)) = (a/norm,b/norm,c/norm)
+triangleNormal0 ((x1,x2,x3), (y1,y2,y3), (z1,z2,z3)) = normalize abc
   where
-    (a, b, c) = crossProd (z1-x1, z2-x2, z3-x3) (y1-x1, y2-x2, y3-x3) 
-    crossProd (a1,a2,a3) (b1,b2,b3) = (a2*b3-a3*b2, a3*b1-a1*b3, a1*b2-a2*b1)
-    norm = sqrt(a*a + b*b + c*c)
-
+    abc = crossProd (z1-x1, z2-x2, z3-x3) (y1-x1, y2-x2, y3-x3) 
+ 
 averageNormals :: Vector -> Vector -> Vector -> Vector -> Vector -> Vector 
                -> Vector
 averageNormals (x1,y1,z1) (x2,y2,z2) (x3,y3,z3) (x4,y4,z4) (x5,y5,z5) (x6,y6,z6) = 
@@ -94,34 +100,26 @@ allNormals vertices = array bounds associations
   associations = map g indices
 
 trianglesij :: Array (Int,Int) Point -> Array (Int,Int) Vector 
-            -> (Double, Double)
             -> (Int, Int) -> (Int, Int)
             -> (NTriangle, NTriangle)
-trianglesij vertices normals (minNorm,maxNorm) (nu,nv) (i,j) = 
-  (((a,na,cola), (b,nb,colb), (c,nc,colc)), ((c,nc,colc), (b,nb,colb), (d,nd,cold)))
+trianglesij vertices normals (nu,nv) (i,j) = 
+  (((a,na), (b,nb), (c,nc)), ((c,nc), (b,nb), (d,nd)))
   where
   ip1 = if i==nu-1 then 0 else i+1
   jp1 = if j==nv-1 then 0 else j+1
   a = pointToVertex3 $ vertices ! (i,j)
   na = vectorToNormal3 $ normals ! (i,j)
-  cola = color' ((norm (vertices ! (i,j)) - minNorm) / (maxNorm - minNorm))
   c = pointToVertex3 $ vertices ! (i,jp1)
   nc = vectorToNormal3 $ normals ! (i,jp1)
-  colc = color' ((norm (vertices ! (i,jp1)) - minNorm) / (maxNorm - minNorm))
   d = pointToVertex3 $ vertices ! (ip1,jp1)
   nd = vectorToNormal3 $ normals ! (ip1,jp1)
-  cold = color' ((norm (vertices ! (ip1,jp1)) - minNorm) / (maxNorm - minNorm))
   b = pointToVertex3 $ vertices ! (ip1,j)
   nb = vectorToNormal3 $ normals ! (ip1,j)
-  colb = color' ((norm (vertices ! (ip1,j)) - minNorm) / (maxNorm - minNorm))
 
 allTriangles :: (Int,Int) -> Double -> [(NTriangle,NTriangle)]
-allTriangles nunv@(n_u,n_v) n =
-  map (trianglesij vertices normals (minNorm,maxNorm) nunv) indices
+allTriangles nunv n =
+  map (trianglesij vertices normals nunv) indices
   where
   vertices = allVertices (pinkallFun n) nunv
   normals = allNormals vertices
-  norms = map norm (elems vertices)
-  minNorm = minimum norms
-  maxNorm = maximum norms
-  indices = A.indices vertices -- [(i,j) | i <- [0 .. n_u-1], j <- [0 .. n_v-1]]
+  indices = A.indices vertices 

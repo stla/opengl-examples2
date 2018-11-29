@@ -16,8 +16,9 @@ library
   hs-source-dirs:      src
   exposed-modules:     Utils.Colors.Color
                      , Utils.Colors.Palettes
+                     , BianchiPinkall
                      , BianchiPinkallColor
-                    --  , BianchiPinkall.Data
+                     , BianchiPinkall.Data
                      , BianchiPinkall.DataColor
   build-depends:       base >= 4.7 && < 5
                      , OpenGL

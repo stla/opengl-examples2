@@ -24,6 +24,7 @@ library
                      , TwentyCones
                      , Cubinder.Data
                      , Cubinder
+                     , DaVinciSphere.Data
   build-depends:       base >= 4.7 && < 5
                      , OpenGL
                      , GLUT
@@ -32,8 +33,8 @@ library
                      , containers
                     --  , hip
                      , directory
-                    --  , colour
-                    --  , palette
+                     , colour
+                     , palette
                     --  , ilist
                      , linear
                      , extra

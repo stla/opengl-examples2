@@ -4,6 +4,21 @@ import Graphics.Rendering.OpenGL.GL (Color4 (..), GLfloat)
 import Numeric.Tools.Interpolation  (at, cubicSpline, tabulate)
 import Numeric.Tools.Mesh           (uniformMesh)
 import Utils.Colors.Palettes
+import Data.Colour.Palette.ColorSet (infiniteWebColors)
+import Data.Colour.SRGB.Linear      (channelBlue, channelGreen,
+                                     channelRed, toRGB)
+import Data.List                    (tails)
+
+infinityOfColors :: Int -> GLfloat -> [Color4 GLfloat]
+infinityOfColors i alpha = map toColor4 (shift i infiniteWebColors)
+  where
+  toColor4 kolor = Color4 r g b alpha
+    where
+    rgb = toRGB kolor
+    r = realToFrac $ channelRed rgb
+    g = realToFrac $ channelGreen rgb
+    b = realToFrac $ channelBlue rgb
+  shift k list = (tails list) !! k
 
 color :: String -> Double -> (Double, Double, Double)
 color palette t = 

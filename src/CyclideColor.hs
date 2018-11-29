@@ -103,19 +103,19 @@ keyboard rot1 rot2 rot3 zoom a c d anim save delay triangles char _ = do
       d' <- get d
       writeIORef triangles (cyclide a' c' d')
     'c' -> do
-      a $~! (subtract 0.1)
-      a' <- get a
       c' <- get c
+      a $~! (\x -> if x>c'+0.1 then x-0.1 else x)
+      a' <- get a
       d' <- get d
       writeIORef triangles (cyclide a' c' d')
     'f' -> do
-      c $~! (+0.1)
       a' <- get a
-      c' <- get c
       d' <- get d
+      c $~! (\x -> if x<a'-0.1 && x<d'-0.1 then x+0.1 else x)
+      c' <- get c
       writeIORef triangles (cyclide a' c' d')
     'v' -> do
-      c $~! (subtract 0.1)
+      c $~! (\x -> if x>0.1 then x-0.1 else x)
       a' <- get a
       c' <- get c
       d' <- get d
@@ -127,9 +127,9 @@ keyboard rot1 rot2 rot3 zoom a c d anim save delay triangles char _ = do
       d' <- get d
       writeIORef triangles (cyclide a' c' d')
     'b' -> do
-      d $~! (subtract 0.1)
-      a' <- get a
       c' <- get c
+      d $~! (\x -> if x>c'+0.1 then x-0.1 else x)
+      a' <- get a
       d' <- get d
       writeIORef triangles (cyclide a' c' d')
     'a' -> anim $~! not

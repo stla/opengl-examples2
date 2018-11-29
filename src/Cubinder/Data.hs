@@ -10,9 +10,9 @@ vertices = map flatten [(u,v) | u <- poly1, v <- poly2]
   where
   toDbl :: Int -> Double
   toDbl = fromIntegral
-  poly1 = [(cos(i*2*pi / toDbl n1),sin(i*2*pi / toDbl n1)) | 
+  poly1 = [(cos(i*2*pi / toDbl n1)/2,sin(i*2*pi / toDbl n1)/2) | 
            i <- map toDbl [0 .. n1-1]]
-  poly2 = [(cos(i*2*pi / toDbl n2),sin(i*2*pi / toDbl n2)) | 
+  poly2 = [(cos(pi/4 + i*2*pi / toDbl n2),sin(pi/4 + i*2*pi / toDbl n2)) | 
            i <- map toDbl [0 .. n2-1]]
   flatten :: ((Double,Double),(Double,Double)) -> (Double,Double,Double,Double)
   flatten ((u1,u2),(v1,v2)) = (u1,u2,v1,v2)

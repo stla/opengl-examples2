@@ -9,3 +9,7 @@ Bianchi-Pinkall torus:
 Twenty cones:
 
 ![gfycat](https://thumbs.gfycat.com/DeepCluelessKissingbug-size_restricted.gif)
+
+Cubinder:
+
+![gfycat](https://thumbs.gfycat.com/ThatOccasionalGraysquirrel-size_restricted.gif)

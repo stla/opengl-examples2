@@ -67,12 +67,11 @@ display context = do
   zoom <- get (contextZoom context)
   alpha <- get (contextAlpha context)
   let points  = map (rightIsoclinic 0 0 (alpha * pi / 180)) vertices
-      ppoints = map (stereog (sqrt 2)) points
+      ppoints = map (stereog (sqrt 1.25)) points
       vectors = map toVector3 ppoints
       edges'  = map (both (toV3 . (!!) ppoints)) edges
-      -- meshesAndMatrices :: [(Mesh, [Float])]
       meshesAndMatrices = 
-          map (\(pt,pt') -> coneMesh pt pt' 0.08 0.08 3 45) edges'
+          map (\(pt,pt') -> coneMesh pt pt' 0.08 0.08 3 30) edges'
   loadIdentity
   (_, size) <- get viewport
   resize zoom size
@@ -162,7 +161,7 @@ idle anim save delay snapshots alpha = do
   when an $ do
     d <- get delay
     when (s && ppmExists && snapshot < 360) $ do
-      let ppm = printf "ppm/twentycones%04d.ppm" snapshot
+      let ppm = printf "ppm/cubinder%04d.ppm" snapshot
       (>>=) capturePPM (B.writeFile ppm)
       print snapshot
       snapshots $~! (+1)

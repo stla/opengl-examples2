@@ -16,6 +16,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Utils.Colors.Color
                      , Utils.Colors.Palettes
+                     , Utils.ConeMesh
                      , BianchiPinkall
                      , BianchiPinkallColor
                      , BianchiPinkall.Data

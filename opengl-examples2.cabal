@@ -21,6 +21,7 @@ library
                      , BianchiPinkallColor
                      , BianchiPinkall.Data
                      , BianchiPinkall.DataColor
+                     , TwentyCones
   build-depends:       base >= 4.7 && < 5
                      , OpenGL
                      , GLUT

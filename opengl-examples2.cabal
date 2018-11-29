@@ -1,0 +1,48 @@
+name:                opengl-examples2
+version:             0.1.0.0
+-- synopsis:
+-- description:
+homepage:            https://github.com/githubuser/opengl-examples2#readme
+license:             GPL-3
+author:              Author name here
+maintainer:          example@example.com
+copyright:           2018 Author name here
+category:            Graphics
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Utils.Colors.Color
+                     , Utils.Colors.Palettes
+                     , BianchiPinkallColor
+                     , BianchiPinkall.Data
+                     , BianchiPinkall.DataColor
+  build-depends:       base >= 4.7 && < 5
+                     , OpenGL
+                     , GLUT
+                     , gl-capture
+                     , bytestring
+                    --  , containers
+                    --  , hip
+                     , directory
+                    --  , colour
+                    --  , palette
+                    --  , ilist
+                     , linear
+                     , extra
+                    --  , split
+                    --  , permutation
+                    --  , combinat
+                    --  , HaskellForMaths
+                     , numeric-tools
+                     , vector
+                     , lens
+                     , array
+  default-language:    Haskell2010
+  ghc-options:        -Wall
+
+source-repository head
+  type:     git
+  location: https://github.com/githubuser/opengl-examples2

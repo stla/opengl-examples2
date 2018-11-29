@@ -4,24 +4,26 @@ import           Control.Concurrent                (threadDelay)
 import           Control.Monad                     (when, forM_)
 import qualified Data.ByteString                   as B
 import           Data.IORef
-import           Data.Tuple.Extra                  (both)
-import           Data.Vector                       ((!))
+import           Data.Vector                       (Vector, (!))
 import           DaVinciSphere.Data
 import           Graphics.Rendering.OpenGL.Capture (capturePPM)
 import           Graphics.Rendering.OpenGL.GL
 import           Graphics.UI.GLUT
-import           Linear                            (V3 (..))
 import           System.Directory                  (doesDirectoryExist)
 import           System.IO.Unsafe                  (unsafePerformIO)
 import           Text.Printf
+import           Utils.Colors.Color                (infinityOfColors)
 import           Utils.ConeMesh
+
+type Mesh = (Vector ((Double,Double,Double),(Double,Double,Double)), 
+             [(Int,Int,Int,Int)])
 
 data Context = Context
     {
       contextRot1      :: IORef GLfloat
     , contextRot2      :: IORef GLfloat
     , contextRot3      :: IORef GLfloat
-    , contextAlpha     :: IORef Double
+    , contextAlpha     :: IORef GLfloat
     , contextZoom      :: IORef GLdouble
     }
 
@@ -30,33 +32,23 @@ white      = Color4    1    1    1    1
 black      = Color4    0    0    0    1
 whitesmoke = Color4 0.96 0.96 0.96    1
 
-toVector3 :: Floating a => (a,a,a) -> Vector3 a
-toVector3 (x,y,z) = Vector3 x y z
-
 toVx3 :: Floating a => (a,a,a) -> Vertex3 a
 toVx3 (x,y,z) = Vertex3 x y z
-
-toV3 :: Floating a => (a,a,a) -> V3 a
-toV3 (x,y,z) = V3 x y z
 
 toN3 :: Floating a => (a,a,a) -> Normal3 a
 toN3 (x,y,z) = Normal3 x y z
 
-stereog :: Double -> (Double,Double,Double,Double) -> (Double,Double,Double)
-stereog r (x1,x2,x3,x4) = (x1 / (r-x4), x2 / (r-x4), x3 / (r-x4))
-
-rightIsoclinic :: Double -> Double -> Double 
-               -> (Double,Double,Double,Double) -> (Double,Double,Double,Double) 
-rightIsoclinic theta phi alpha (x0,x1,x2,x3) =
-  ( q0*x0 - q1*x1 - q2*x2 - q3*x3
-  , q1*x0 + q0*x1 + q3*x2 - q2*x3
-  , q2*x0 - q3*x1 + q0*x2 + q1*x3
-  , q3*x0 + q2*x1 - q1*x2 + q0*x3 )
+triangleNormal :: Floating a => (Vertex3 a, Vertex3 a, Vertex3 a) -> Normal3 a
+triangleNormal (Vertex3 x1 x2 x3, Vertex3 y1 y2 y3, Vertex3 z1 z2 z3) =
+  Normal3 (a/norm) (b/norm) (c/norm)
   where
-    q0 = cos alpha
-    q1 = sin theta * cos phi * sin alpha
-    q2 = sin theta * sin phi * sin alpha
-    q3 = cos theta * sin alpha
+    (a, b, c) = crossProd (y1-x1, y2-x2, y3-x3) (z1-x1, z2-x2, z3-x3)
+    crossProd (a1,a2,a3) (b1,b2,b3) = (a2*b3-a3*b2, a3*b1-a1*b3, a1*b2-a2*b1)
+    norm = sqrt (a*a + b*b + c*c)
+
+meshesAndMatrices :: [(Mesh, [Double])]
+meshesAndMatrices = 
+    map (\(pt,pt') -> coneMesh pt pt' 0.08 0.08 3 30) edges
 
 display :: Context -> DisplayCallback
 display context = do
@@ -66,19 +58,22 @@ display context = do
   r3 <- get (contextRot3 context)
   zoom <- get (contextZoom context)
   alpha <- get (contextAlpha context)
-  let points  = map (rightIsoclinic 0 0 (alpha * pi / 180)) vertices
-      ppoints = map (stereog (sqrt 1.25)) points
-      vectors = map toVector3 ppoints
-      edges'  = map (both (toV3 . (!!) ppoints)) edges
-      meshesAndMatrices = 
-          map (\(pt,pt') -> coneMesh pt pt' 0.08 0.08 3 30) edges'
   loadIdentity
   (_, size) <- get viewport
   resize zoom size
   rotate r1 $ Vector3 1 0 0
   rotate r2 $ Vector3 0 1 0
   rotate r3 $ Vector3 0 0 1
-  forM_ vectors $ \vec -> preservingMatrix $ do
+  rotate alpha $ Vector3 1 1 1
+  forM_ (zip triangles (infinityOfColors 0 0.2)) $ \(face,col) -> 
+    renderPrimitive Triangles $ do
+      materialDiffuse Front $= col
+      drawTriangle face
+  forM_ (zip quads (infinityOfColors (length triangles) 0.2)) $ \(face,col) -> 
+    renderPrimitive Quads $ do
+      materialDiffuse Front $= col
+      drawQuad face 
+  forM_ vertices $ \vec -> preservingMatrix $ do
     translate vec
     materialDiffuse Front $= whitesmoke
     renderObject Solid $ Sphere' 0.1 15 15
@@ -89,31 +84,42 @@ display context = do
       forM_ ((snd . fst) meshAndMatrix) $ \(i,j,k,l) ->
         renderPrimitive Quads $ do
           materialDiffuse Front $= whitesmoke
-          drawQuad i j k l ((fst . fst) meshAndMatrix)
+          drawQuad' i j k l ((fst . fst) meshAndMatrix)
   swapBuffers
   where
-    drawQuad i j k l verticesAndNormals = do 
-        normal ni
-        vertex vi
-        normal nj
-        vertex vj
-        normal nk
-        vertex vk
-        normal nl
-        vertex vl
-        where
-          (vi',ni') = verticesAndNormals ! i
-          (vj',nj') = verticesAndNormals ! j
-          (vk',nk') = verticesAndNormals ! k
-          (vl',nl') = verticesAndNormals ! l
-          vi = toVx3 vi'
-          ni = toN3 ni'
-          vj = toVx3 vj'
-          nj = toN3 nj'
-          vk = toVx3 vk'
-          nk = toN3 nk'
-          vl = toVx3 vl'
-          nl = toN3 nl'
+    drawTriangle (v1,v2,v3) = do
+      normal $ triangleNormal (v1, v3, v2)
+      vertex v1
+      vertex v2
+      vertex v3
+    drawQuad (v1,v2,v3,v4) = do
+      normal $ triangleNormal (v1, v3, v2)
+      vertex v1
+      vertex v2
+      vertex v3
+      vertex v4
+    drawQuad' i j k l verticesAndNormals = do 
+      normal ni
+      vertex vi
+      normal nj
+      vertex vj
+      normal nk
+      vertex vk
+      normal nl
+      vertex vl
+      where
+        (vi',ni') = verticesAndNormals ! i
+        (vj',nj') = verticesAndNormals ! j
+        (vk',nk') = verticesAndNormals ! k
+        (vl',nl') = verticesAndNormals ! l
+        vi = toVx3 vi'
+        ni = toN3 ni'
+        vj = toVx3 vj'
+        nj = toN3 nj'
+        vk = toVx3 vk'
+        nk = toN3 nk'
+        vl = toVx3 vl'
+        nl = toN3 nl'
       
 resize :: GLdouble -> Size -> IO ()
 resize zoom s@(Size w h) = do
@@ -152,7 +158,7 @@ ppmExists :: Bool
 {-# NOINLINE ppmExists #-}
 ppmExists = unsafePerformIO $ doesDirectoryExist "./ppm"
 
-idle :: IORef Bool -> IORef Bool -> IORef Int -> IORef Int -> IORef Double 
+idle :: IORef Bool -> IORef Bool -> IORef Int -> IORef Int -> IORef GLfloat
      -> IdleCallback
 idle anim save delay snapshots alpha = do
   an <- get anim
@@ -173,15 +179,20 @@ idle anim save delay snapshots alpha = do
 main :: IO ()
 main = do
   _ <- getArgsAndInitialize
-  _ <- createWindow "Twenty cones"
+  _ <- createWindow "da Vinci's 72-sided sphere"
   windowSize $= Size 500 500
-  initialDisplayMode $= [RGBAMode, DoubleBuffered, WithDepthBuffer]
-  clearColor $= black
+  initialDisplayMode $= [RGBAMode, DoubleBuffered, WithDepthBuffer, WithAlphaComponent]
+  blend $= Enabled
+  blendFunc $= (SrcAlpha, OneMinusSrcAlpha)
+  clearColor $= Color4 0 0 0 0
+--   materialEmission Front $= black
   materialSpecular Front $= white
   materialShininess Front $= 50
   lighting $= Enabled
   light (Light 0) $= Enabled
   position (Light 0) $= Vertex4 0 0 100 1
+  ambient (Light 0) $= white
+  diffuse (Light 0) $= white
   specular (Light 0) $= white
   depthFunc $= Just Less
   shadeModel $= Smooth

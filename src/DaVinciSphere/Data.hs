@@ -69,18 +69,18 @@ vertices0 = [
     (0, 0, 2.04922),
     (0, 0, -2.04922) ]
 
-vertices' :: [Vector3 Double]
-vertices' = map toVect3 vertices0
+vertices :: [Vector3 Double]
+vertices = map toVect3 vertices0
   where
     toVect3 (x,y,z) = Vector3 x y z 
 
-vertices'' :: [Vertex3 Double]
-vertices'' = map toVx3 vertices0
+vertices' :: [Vertex3 Double]
+vertices' = map toVx3 vertices0
   where
     toVx3 (x,y,z) = Vertex3 x y z 
 
-vertices''' :: [V3 Double]
-vertices''' = map toV3 vertices0
+vertices'' :: [V3 Double]
+vertices'' = map toV3 vertices0
   where
     toV3 (x,y,z) = V3 x y z 
 
@@ -304,14 +304,14 @@ quadsIdxs =
   ]
 
 edges :: [(V3 Double, V3 Double)]
-edges = map (both (vertices''' !!)) edgesIdxs
+edges = map (both (vertices'' !!)) edgesIdxs
 
 triangles :: [(Vertex3 Double, Vertex3 Double, Vertex3 Double)]
-triangles = map (\(i,j,k) -> (vertices'' !! i, vertices'' !! j, vertices'' !! k)) 
+triangles = map (\(i,j,k) -> (vertices' !! i, vertices' !! j, vertices' !! k)) 
             trianglesIdxs
 
 quads :: [(Vertex3 Double, Vertex3 Double, Vertex3 Double, Vertex3 Double)]
 quads = map (\(i,j,k,l) -> 
-             (vertices'' !! i, vertices'' !! j, vertices'' !! k, vertices'' !! l)) 
+             (vertices' !! i, vertices' !! j, vertices' !! k, vertices' !! l)) 
             quadsIdxs
             

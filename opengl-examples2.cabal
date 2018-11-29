@@ -25,6 +25,7 @@ library
                      , Cubinder.Data
                      , Cubinder
                      , DaVinciSphere.Data
+                     , DaVinciSphere
   build-depends:       base >= 4.7 && < 5
                      , OpenGL
                      , GLUT

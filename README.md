@@ -21,3 +21,7 @@ Leonardo da Vinci's 72-sided sphere:
 Ring cyclide:
 
 ![gfycat](https://thumbs.gfycat.com/PertinentPepperyIrishwaterspaniel-size_restricted.gif)
+
+Linked cyclides:
+
+![gfycat](https://thumbs.gfycat.com/RealRigidBoa-size_restricted.gif)

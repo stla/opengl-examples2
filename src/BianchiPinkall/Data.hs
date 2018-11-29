@@ -1,5 +1,6 @@
 module BianchiPinkall.Data where
-import           Data.Array      (Array, (!), array)
+import           Data.Array                   (Array, (!), array, elems)
+import qualified Data.Array                   as A
 import           Graphics.Rendering.OpenGL.GL (Normal3 (..), Vertex3 (..))
 
 type Point = (Double, Double, Double)

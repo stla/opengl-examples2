@@ -1,5 +1,6 @@
-module BianchiPinkall.Data where
-import           Data.Array                   (Array, (!), array)
+module BianchiPinkall.DataColor where
+import           Data.Array                   (Array, (!), array, elems)
+import qualified Data.Array                   as A
 import           Graphics.Rendering.OpenGL.GL (Normal3 (..), Vertex3 (..), 
                                                Color4 (..), GLfloat)
 import Utils.Colors.Color
@@ -55,8 +56,8 @@ allVertices :: (Double -> Double -> Point) -> (Int,Int)
             -> Array (Int,Int) Point
 allVertices f (n_u,n_v) = array ((0,0), (n_u-1,n_v-1)) associations
   where
-  u_ = [2*pi * frac i n_u | i <- [0 .. nu-1]]
-  v_ = [2*pi * frac i n_v | i <- [0 .. nv-1]]  
+  u_ = [2*pi * frac i n_u | i <- [0 .. n_u-1]]
+  v_ = [2*pi * frac i n_v | i <- [0 .. n_v-1]]  
   indices = [(i,j) | i <- [0 .. n_u-1], j <- [0 .. n_v-1]]
   g (i,j) = ((i,j), f (u_ !! i) (v_ !! j))
   associations = map g indices

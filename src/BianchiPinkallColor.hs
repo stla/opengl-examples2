@@ -14,8 +14,8 @@ import           System.IO.Unsafe
 import           Text.Printf
 
 n_u,n_v :: Int
-n_u = 50
-n_v = 50
+n_u = 200
+n_v = 200
 
 torus :: Double -> [(NTriangle,NTriangle)]
 torus = allTriangles (n_u,n_v)
@@ -28,10 +28,9 @@ data Context = Context
     , contextTriangles :: IORef [(NTriangle,NTriangle)]
     }
 
-white,black,pink :: Color4 GLfloat
-white      = Color4    1   1   1    1
-black      = Color4    0   0   0    1
-pink       = Color4    1   0   0.5  1
+white,discord :: Color4 GLfloat
+white      = Color4    1    1    1 1
+discord    = Color4 0.21 0.22 0.25 1
 
 display :: Context -> IORef GLdouble -> IORef GLfloat -> DisplayCallback
 display context zoom alpha = do
@@ -71,7 +70,7 @@ resize zoom s@(Size w h) = do
   matrixMode $= Projection
   loadIdentity
   perspective 45.0 (w'/h') 1.0 100.0
-  lookAt (Vertex3 0 0 (24+zoom)) (Vertex3 0 0 0) (Vector3 0 1 0)
+  lookAt (Vertex3 0 0 (2.5+zoom)) (Vertex3 0 0 0) (Vector3 0 1 0)
   matrixMode $= Modelview 0
   where
     w' = realToFrac w
@@ -85,7 +84,7 @@ keyboard :: IORef GLfloat -> IORef GLfloat -> IORef GLfloat -- rotations
          -> IORef Int -- delay
          -> IORef [(NTriangle,NTriangle)]
          -> KeyboardCallback
-keyboard rot1 rot2 rot3 zoom n a anim save delay triangles c _ = do
+keyboard rot1 rot2 rot3 zoom n anim save delay triangles c _ = do
   case c of
     'e' -> rot1 $~! subtract 2
     'r' -> rot1 $~! (+2)
@@ -117,7 +116,7 @@ ppmExists = unsafePerformIO $ doesDirectoryExist "./ppm"
 
 idle :: IORef Bool -> IORef Bool -> IORef Int -> IORef Int -> IORef GLfloat 
      -> IdleCallback
-idle anim save delay snapshot alpha = do
+idle anim save delay snapshots alpha = do
   a <- get anim
   snapshot <- get snapshots
   s <- get save
@@ -139,14 +138,13 @@ main = do
   _ <- createWindow "Bianchi-Pinkall torus"
   windowSize $= Size 500 500
   initialDisplayMode $= [RGBAMode, DoubleBuffered, WithDepthBuffer]
-  clearColor $= black
-  -- materialAmbient Front $= black
+  clearColor $= discord
+  materialSpecular Front $= white
+  materialShininess Front $= 50
   lighting $= Enabled
   light (Light 0) $= Enabled
   position (Light 0) $= Vertex4 0 0 (-100) 1
-  -- ambient (Light 0) $= white
-  -- diffuse (Light 0) $= white
-  -- specular (Light 0) $= white
+  specular (Light 0) $= white
   depthFunc $= Just Less
   shadeModel $= Smooth
   rot1 <- newIORef 0.0
@@ -168,7 +166,7 @@ main = do
                              zoom alpha
   reshapeCallback $= Just (resize 0)
   keyboardCallback $= 
-    Just (keyboard rot1 rot2 rot3 zoom nlobes' a' anim save delay triangles')
+    Just (keyboard rot1 rot2 rot3 zoom n' anim save delay triangles')
   snapshot <- newIORef 0
   idleCallback $= Just (idle anim save delay snapshot alpha)
   putStrLn "*** Bianchi-Pinkall torus ***\n\

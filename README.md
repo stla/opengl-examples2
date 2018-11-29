@@ -17,3 +17,7 @@ Cubinder:
 Leonardo da Vinci's 72-sided sphere:
 
 ![gfycat](https://thumbs.gfycat.com/UnhealthyEdibleCheetah-size_restricted.gif)
+
+Ring cyclide:
+
+![gfycat](https://thumbs.gfycat.com/PertinentPepperyIrishwaterspaniel-size_restricted.gif)

@@ -26,6 +26,8 @@ library
                      , Cubinder
                      , DaVinciSphere.Data
                      , DaVinciSphere
+                     , Cyclide.DataColor
+                     , CyclideColor
   build-depends:       base >= 4.7 && < 5
                      , OpenGL
                      , GLUT

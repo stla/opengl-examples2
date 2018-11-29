@@ -112,19 +112,23 @@ trianglesij vertices normals (minNorm,maxNorm) (nu,nv) (i,j) =
   jp1 = if j==nv-1 then 0 else j+1
   a = pointToVertex3 $ vertices ! (i,j)
   na = vectorToNormal3 $ normals ! (i,j)
-  cola = color' ((norm (vertices ! (i,j)) - minNorm) / (maxNorm - minNorm))
+  cola = color' "magma" 
+                ((norm (vertices ! (i,j)) - minNorm) / (maxNorm - minNorm))
   c = pointToVertex3 $ vertices ! (i,jp1)
   nc = vectorToNormal3 $ normals ! (i,jp1)
-  colc = color' ((norm (vertices ! (i,jp1)) - minNorm) / (maxNorm - minNorm))
+  colc = color' "magma"
+                ((norm (vertices ! (i,jp1)) - minNorm) / (maxNorm - minNorm))
   d = pointToVertex3 $ vertices ! (ip1,jp1)
   nd = vectorToNormal3 $ normals ! (ip1,jp1)
-  cold = color' ((norm (vertices ! (ip1,jp1)) - minNorm) / (maxNorm - minNorm))
+  cold = color' "magma"
+                ((norm (vertices ! (ip1,jp1)) - minNorm) / (maxNorm - minNorm))
   b = pointToVertex3 $ vertices ! (ip1,j)
   nb = vectorToNormal3 $ normals ! (ip1,j)
-  colb = color' ((norm (vertices ! (ip1,j)) - minNorm) / (maxNorm - minNorm))
+  colb = color' "magma"
+                ((norm (vertices ! (ip1,j)) - minNorm) / (maxNorm - minNorm))
 
 allTriangles :: (Int,Int) -> Double -> [(NTriangle,NTriangle)]
-allTriangles nunv@(n_u,n_v) n =
+allTriangles nunv n =
   map (trianglesij vertices normals (minNorm,maxNorm) nunv) indices
   where
   vertices = allVertices (pinkallFun n) nunv
@@ -132,4 +136,4 @@ allTriangles nunv@(n_u,n_v) n =
   norms = map norm (elems vertices)
   minNorm = minimum norms
   maxNorm = maximum norms
-  indices = A.indices vertices -- [(i,j) | i <- [0 .. n_u-1], j <- [0 .. n_v-1]]
+  indices = A.indices vertices 

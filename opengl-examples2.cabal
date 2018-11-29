@@ -2,11 +2,11 @@ name:                opengl-examples2
 version:             0.1.0.0
 -- synopsis:
 -- description:
-homepage:            https://github.com/githubuser/opengl-examples2#readme
+homepage:            https://github.com/stla/opengl-examples2#readme
 license:             GPL-3
-author:              Author name here
+author:              Stéphane Laurent
 maintainer:          example@example.com
-copyright:           2018 Author name here
+copyright:           2018 Stéphane Laurent
 category:            Graphics
 build-type:          Simple
 extra-source-files:  README.md
@@ -27,7 +27,7 @@ library
                      , GLUT
                      , gl-capture
                      , bytestring
-                    --  , containers
+                     , containers
                     --  , hip
                      , directory
                     --  , colour
@@ -48,4 +48,4 @@ library
 
 source-repository head
   type:     git
-  location: https://github.com/githubuser/opengl-examples2
+  location: https://github.com/stla/opengl-examples2

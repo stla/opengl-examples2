@@ -13,3 +13,7 @@ Twenty cones:
 Cubinder:
 
 ![gfycat](https://thumbs.gfycat.com/ThatOccasionalGraysquirrel-size_restricted.gif)
+
+Leonardo da Vinci's 72-sided sphere:
+
+![gfycat](https://thumbs.gfycat.com/UnhealthyEdibleCheetah-size_restricted.gif)

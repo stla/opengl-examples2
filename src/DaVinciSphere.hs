@@ -48,7 +48,7 @@ triangleNormal (Vertex3 x1 x2 x3, Vertex3 y1 y2 y3, Vertex3 z1 z2 z3) =
 
 meshesAndMatrices :: [(Mesh, [Double])]
 meshesAndMatrices = 
-    map (\(pt,pt') -> coneMesh pt pt' 0.08 0.08 3 30) edges
+    map (\(pt,pt') -> coneMesh pt pt' 0.06 0.06 3 30) edges
 
 display :: Context -> DisplayCallback
 display context = do
@@ -65,33 +65,33 @@ display context = do
   rotate r2 $ Vector3 0 1 0
   rotate r3 $ Vector3 0 0 1
   rotate alpha $ Vector3 1 1 1
-  forM_ (zip triangles (infinityOfColors 0 0.2)) $ \(face,col) -> 
-    renderPrimitive Triangles $ do
-      materialDiffuse Front $= col
-      drawTriangle face
-  forM_ (zip quads (infinityOfColors (length triangles) 0.2)) $ \(face,col) -> 
-    renderPrimitive Quads $ do
-      materialDiffuse Front $= col
-      drawQuad face 
   forM_ vertices $ \vec -> preservingMatrix $ do
     translate vec
     materialDiffuse Front $= whitesmoke
-    renderObject Solid $ Sphere' 0.1 15 15
+    renderObject Solid $ Sphere' 0.08 15 15
   forM_ meshesAndMatrices $ \meshAndMatrix -> 
     preservingMatrix $ do
       m <- newMatrix RowMajor (snd meshAndMatrix) :: IO (GLmatrix Double)
       multMatrix m
       forM_ ((snd . fst) meshAndMatrix) $ \(i,j,k,l) ->
         renderPrimitive Quads $ do
-          materialDiffuse Front $= whitesmoke
+          materialDiffuse FrontAndBack $= whitesmoke
           drawQuad' i j k l ((fst . fst) meshAndMatrix)
+  forM_ (zip triangles (infinityOfColors 0 0.5)) $ \(face,col) -> 
+    renderPrimitive Triangles $ do
+      materialDiffuse Front $= col
+      drawTriangle face
+  forM_ (zip quads (infinityOfColors (length triangles) 0.5)) $ \(face,col) -> 
+    renderPrimitive Quads $ do
+      materialDiffuse Front $= col
+      drawQuad face 
   swapBuffers
   where
     drawTriangle (v1,v2,v3) = do
       normal $ triangleNormal (v1, v3, v2)
       vertex v1
-      vertex v2
       vertex v3
+      vertex v2
     drawQuad (v1,v2,v3,v4) = do
       normal $ triangleNormal (v1, v3, v2)
       vertex v1
@@ -167,7 +167,7 @@ idle anim save delay snapshots alpha = do
   when an $ do
     d <- get delay
     when (s && ppmExists && snapshot < 360) $ do
-      let ppm = printf "ppm/cubinder%04d.ppm" snapshot
+      let ppm = printf "ppm/davincisphere%04d.ppm" snapshot
       (>>=) capturePPM (B.writeFile ppm)
       print snapshot
       snapshots $~! (+1)
@@ -184,8 +184,7 @@ main = do
   initialDisplayMode $= [RGBAMode, DoubleBuffered, WithDepthBuffer, WithAlphaComponent]
   blend $= Enabled
   blendFunc $= (SrcAlpha, OneMinusSrcAlpha)
-  clearColor $= Color4 0 0 0 0
---   materialEmission Front $= black
+  clearColor $= black
   materialSpecular Front $= white
   materialShininess Front $= 50
   lighting $= Enabled
@@ -214,7 +213,7 @@ main = do
     Just (keyboard rot1 rot2 rot3 zoom anim save delay)
   snapshot <- newIORef 0
   idleCallback $= Just (idle anim save delay snapshot alpha)
-  putStrLn "*** Cubinder ***\n\
+  putStrLn "*** da Vinci's 72-sided sphere ***\n\
         \    To quit, press q.\n\
         \    Scene rotation: e, r, t, y, u, i\n\
         \    Zoom: l, m\n\

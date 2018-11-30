@@ -20,10 +20,11 @@ infinityOfColors i alpha = map toColor4 (shift i infiniteWebColors)
     b = realToFrac $ channelBlue rgb
   shift k list = (tails list) !! k
 
-color :: String -> Double -> (Double, Double, Double)
+color :: (Floating a, Real a) => String -> a -> (Double, Double, Double)
 color palette t = 
-  (tbl_r `at` t, tbl_g `at` t, tbl_b `at` t)
+  (tbl_r `at` t', tbl_g `at` t', tbl_b `at` t')
   where
+    t' = realToFrac t
     (r, g, b) = palettes ! palette
     umesh = uniformMesh (0,1) 256
     tab_r = tabulate umesh r
@@ -37,5 +38,5 @@ rgbToColor4 :: (Double,Double,Double) -> Color4 GLfloat
 rgbToColor4 (r,g,b) =
   Color4 (realToFrac r) (realToFrac g) (realToFrac b) 1
 
-color' :: String -> Double -> Color4 GLfloat
+color' :: (Real a, Floating a) => String -> a -> Color4 GLfloat
 color' palette = rgbToColor4 . (color palette)

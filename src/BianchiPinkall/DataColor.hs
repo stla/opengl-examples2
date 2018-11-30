@@ -3,7 +3,7 @@ import           Data.Array                   (Array, (!), array, elems)
 import qualified Data.Array                   as A
 import           Graphics.Rendering.OpenGL.GL (Normal3 (..), Vertex3 (..), 
                                                Color4 (..), GLfloat)
-import Utils.Colors.Color
+import           Utils.Colors.Color
 
 type Point = (Double, Double, Double)
 type Vector = (Double, Double, Double)

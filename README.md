@@ -33,3 +33,7 @@ Compound of five tetrahedra:
 Conical spiral:
 
 ![gfycat](https://thumbs.gfycat.com/MajorGenerousAlligatorgar-size_restricted.gif)
+
+Truncated tesseract:
+
+![gfycat](https://thumbs.gfycat.com/CleverFoolishAfricanmolesnake-size_restricted.gif)

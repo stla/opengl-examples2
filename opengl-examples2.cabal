@@ -35,6 +35,9 @@ library
                      , Utils.Triplets
                      , ConicalSpiral.Data
                      , ConicalSpiral
+                     , TruncatedTesseract.Data
+                     , TruncatedTesseract
+                     , Utils.Functions4D
   build-depends:       base >= 4.7 && < 5
                      , OpenGL
                      , GLUT

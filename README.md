@@ -29,3 +29,7 @@ Linked cyclides:
 Compound of five tetrahedra:
 
 ![gfycat](https://thumbs.gfycat.com/DisfiguredAngelicCuckoo-size_restricted.gif)
+
+Conical spiral:
+
+![gfycat](https://thumbs.gfycat.com/MajorGenerousAlligatorgar-size_restricted.gif)

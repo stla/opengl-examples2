@@ -28,4 +28,4 @@ Linked cyclides:
 
 Compound of five tetrahedra:
 
-![gfycat](https://thumbs.gfycat.com/DarkUntidyEel-size_restricted.gif)
+![gfycat](https://thumbs.gfycat.com/DisfiguredAngelicCuckoo-size_restricted.gif)

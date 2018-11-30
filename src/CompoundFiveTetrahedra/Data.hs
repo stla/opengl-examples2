@@ -52,7 +52,7 @@ tetra1Idxs = (16,13, 1,10)
 tetra2Idxs = (17, 0, 3, 4)
 tetra3Idxs = (18, 5,14, 6)
 tetra4Idxs = ( 2,12,11, 7)
-tetra5Idxs = (19,15, 9,15)
+tetra5Idxs = (19,15, 9, 8)
 
 tetraEdges :: (Int,Int,Int,Int) -> [(Int,Int)]
 tetraEdges (i,j,k,l) = [(i,j),(i,k),(i,l),(j,k),(j,l),(k,l)]

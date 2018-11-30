@@ -14,7 +14,7 @@ sconical alpha beta gamma n swap u v = (x, e*y, e*z)
     e = realToFrac $ 1 - 2*fromEnum swap
 
 gradient :: Floating a => a -> a -> a -> a -> Bool -> a -> a -> (a,a,a)
-gradient alpha beta gamma n swap u v = normalize (crossProd df_dv df_du)
+gradient alpha beta gamma n swap u v = normalize (crossProd df_du df_dv)
   where
     dfx_du = alpha*(1-0.5*v/pi)*sin(n*v+0.5*pi)*sin u
     dfy_du = alpha*(1-0.5*v/pi)*cos u

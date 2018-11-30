@@ -41,3 +41,7 @@ Truncated tesseract:
 Horse saddle:
 
 ![gfycat](https://thumbs.gfycat.com/InsecureAnxiousArcherfish-size_restricted.gif)
+
+Spherical icosahedron:
+
+![gfycat](https://thumbs.gfycat.com/CheapImmediateAppaloosa-size_restricted.gif)

@@ -9,7 +9,7 @@ func :: Floating a => a -> a -> (a,a,a)
 func u v = (u, v, u*u-v*v)
 
 gradient :: Floating a => a -> a -> (a,a,a)
-gradient u v = normalize (crossProd df_dv df_du)
+gradient u v = normalize (crossProd df_du df_dv)
   where
     dfx_du = 1
     dfy_du = 0

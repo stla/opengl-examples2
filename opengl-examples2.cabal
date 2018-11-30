@@ -42,6 +42,9 @@ library
                      , HorseSaddle
                      , Icosahedron.Data
                      , Icosahedron
+                     , Utils.SphericalTriangle
+                     , SphericalIcosahedron.Data
+                     , SphericalIcosahedron
   build-depends:       base >= 4.7 && < 5
                      , OpenGL
                      , GLUT

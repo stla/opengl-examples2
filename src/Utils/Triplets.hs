@@ -7,7 +7,12 @@ norm :: Floating a => (a,a,a) -> a
 norm (x,y,z) = sqrt(x*x + y*y + z*z)
 
 normalize :: Floating a => (a,a,a) -> (a,a,a)
-normalize (x,y,z) = (-x/n,-y/n,-z/n)
+normalize (x,y,z) = (x/n,y/n,z/n)
+  where
+    n = norm (x,y,z)
+
+negNormalize :: Floating a => (a,a,a) -> (a,a,a)
+negNormalize (x,y,z) = (-x/n,-y/n,-z/n)
   where
     n = norm (x,y,z)
 
@@ -28,8 +33,8 @@ tripletToVector3 (x,y,z) = Vector3 x y z
 tripletToNormal3 :: Floating a => (a,a,a) -> Normal3 a
 tripletToNormal3 (x,y,z) = Normal3 x y z
 
-tripletTonegNormal3 :: Floating a => (a,a,a) -> Normal3 a
-tripletTonegNormal3 (x,y,z) = Normal3 (-x) (-y) (-z)
+tripletToNegNormal3 :: Floating a => (a,a,a) -> Normal3 a
+tripletToNegNormal3 (x,y,z) = Normal3 (-x) (-y) (-z)
 
 tripletToV3 :: Floating a => (a,a,a) -> V3 a
 tripletToV3 (x,y,z) = V3 x y z
@@ -42,6 +47,9 @@ triangleNormal ((x1,x2,x3), (y1,y2,y3), (z1,z2,z3)) =
 
 triangleNegNormal :: Floating a => ((a,a,a),(a,a,a),(a,a,a)) -> Normal3 a
 triangleNegNormal ((x1,x2,x3), (y1,y2,y3), (z1,z2,z3)) =
-  tripletTonegNormal3 (normalize abc)
+  tripletToNegNormal3 (normalize abc)
   where
     abc = crossProd (y1-x1, y2-x2, y3-x3) (z1-x1, z2-x2, z3-x3)
+
+middle :: Floating a => (a,a,a) -> (a,a,a) -> (a,a,a)
+middle (x1,y1,z1) (x2,y2,z2) = ((x1+x2)/2, (y1+y2)/2, (z1+z2)/2)

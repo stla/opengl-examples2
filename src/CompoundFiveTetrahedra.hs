@@ -180,11 +180,9 @@ idle anim save delay snapshots alpha = do
 main :: IO ()
 main = do
   _ <- getArgsAndInitialize
-  _ <- createWindow "da Vinci's 72-sided sphere"
+  _ <- createWindow "Compound of five tetrahedra"
   windowSize $= Size 500 500
-  initialDisplayMode $= [RGBAMode, DoubleBuffered, WithDepthBuffer, WithAlphaComponent]
-  blend $= Enabled
-  blendFunc $= (SrcAlpha, OneMinusSrcAlpha)
+  initialDisplayMode $= [RGBAMode, DoubleBuffered, WithDepthBuffer]
   clearColor $= black
   materialSpecular Front $= white
   materialShininess Front $= 50
@@ -214,7 +212,7 @@ main = do
     Just (keyboard rot1 rot2 rot3 zoom anim save delay)
   snapshot <- newIORef 0
   idleCallback $= Just (idle anim save delay snapshot alpha)
-  putStrLn "*** da Vinci's 72-sided sphere ***\n\
+  putStrLn "*** Compound of five tetrahedra ***\n\
         \    To quit, press q.\n\
         \    Scene rotation: e, r, t, y, u, i\n\
         \    Zoom: l, m\n\

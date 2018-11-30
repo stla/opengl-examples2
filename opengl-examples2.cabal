@@ -30,6 +30,8 @@ library
                      , CyclideColor
                      , LinkedCyclides.Data
                      , LinkedCyclides
+                     , CompoundFiveTetrahedra.Data
+                     , CompoundFiveTetrahedra
   build-depends:       base >= 4.7 && < 5
                      , OpenGL
                      , GLUT

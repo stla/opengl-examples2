@@ -25,3 +25,7 @@ Ring cyclide:
 Linked cyclides:
 
 ![gfycat](https://thumbs.gfycat.com/RealRigidBoa-size_restricted.gif)
+
+Compound of five tetrahedra:
+
+![gfycat](https://thumbs.gfycat.com/DarkUntidyEel-size_restricted.gif)

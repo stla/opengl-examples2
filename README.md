@@ -45,3 +45,7 @@ Horse saddle:
 Spherical icosahedron:
 
 ![gfycat](https://thumbs.gfycat.com/CheapImmediateAppaloosa-size_restricted.gif)
+
+Compound of two icosahedra:
+
+![gfycat](https://thumbs.gfycat.com/QuerulousWigglyGibbon-size_restricted.gif)

@@ -49,3 +49,7 @@ Spherical icosahedron:
 Compound of two icosahedra:
 
 ![gfycat](https://thumbs.gfycat.com/QuerulousWigglyGibbon-size_restricted.gif)
+
+Compound of two great icosahedra:
+
+![gfycat](https://thumbs.gfycat.com/FavorableEntireEyas-size_restricted.gif)

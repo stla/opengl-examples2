@@ -47,6 +47,8 @@ library
                      , SphericalIcosahedron
                      , CompoundTwoIcosahedra.Data
                      , CompoundTwoIcosahedra
+                     , CompoundTwoGreatIcosahedra.Data
+                     , CompoundTwoGreatIcosahedra
   build-depends:       base >= 4.7 && < 5
                      , OpenGL
                      , GLUT

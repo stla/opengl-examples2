@@ -49,6 +49,8 @@ library
                      , CompoundTwoIcosahedra
                      , CompoundTwoGreatIcosahedra.Data
                      , CompoundTwoGreatIcosahedra
+                     , Bilunabirotunda.Data
+                     , Bilunabirotunda
   build-depends:       base >= 4.7 && < 5
                      , OpenGL
                      , GLUT

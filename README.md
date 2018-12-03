@@ -53,3 +53,7 @@ Compound of two icosahedra:
 Compound of two great icosahedra:
 
 ![gfycat](https://thumbs.gfycat.com/FavorableEntireEyas-size_restricted.gif)
+
+Bilunabirotunda pseudopyramid:
+
+![gfycat](https://thumbs.gfycat.com/PartialGoodnaturedLeonberger-size_restricted.gif)

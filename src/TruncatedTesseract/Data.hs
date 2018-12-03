@@ -1,8 +1,5 @@
 module TruncatedTesseract.Data
   where
--- import           Data.Tuple.Extra             (both)
--- import           Graphics.Rendering.OpenGL.GL (Vertex3 (..), Vector3 (..))
--- import           Linear (V3 (..))
 
 vertices :: [(Double,Double,Double,Double)]
 vertices = [ 

@@ -57,3 +57,7 @@ Compound of two great icosahedra:
 Bilunabirotunda pseudopyramid:
 
 ![gfycat](https://thumbs.gfycat.com/PartialGoodnaturedLeonberger-size_restricted.gif)
+
+Icosahedron within octahedron:
+
+![gfycat](https://thumbs.gfycat.com/OrangeVictoriousHoneyeater-size_restricted.gif)

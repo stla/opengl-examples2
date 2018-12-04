@@ -53,6 +53,8 @@ library
                      , Bilunabirotunda
                      , IcosahedronInOctahedron.Data
                      , IcosahedronInOctahedron
+                     , CompoundFiveOctahedra.Data
+                     , CompoundFiveOctahedra
   build-depends:       base >= 4.7 && < 5
                      , OpenGL
                      , GLUT
@@ -68,7 +70,7 @@ library
                      , extra
                     --  , split
                     --  , permutation
-                    --  , combinat
+                     , combinat
                     --  , HaskellForMaths
                      , numeric-tools
                      , vector

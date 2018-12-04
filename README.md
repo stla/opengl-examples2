@@ -61,3 +61,7 @@ Bilunabirotunda pseudopyramid:
 Icosahedron within octahedron:
 
 ![gfycat](https://thumbs.gfycat.com/OrangeVictoriousHoneyeater-size_restricted.gif)
+
+Compound of five octahedra:
+
+![gfycat](https://thumbs.gfycat.com/WeightyBlondAmericanwigeon-size_restricted.gif)

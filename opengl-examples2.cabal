@@ -30,6 +30,8 @@ library
                      , CyclideColor
                      , LinkedCyclides.Data
                      , LinkedCyclides
+                     , LinkedCyclides.Data2
+                     , LinkedCyclides2
                      , CompoundFiveTetrahedra.Data
                      , CompoundFiveTetrahedra
                      , Utils.Triplets

@@ -6,6 +6,9 @@ import           Linear                       (V3 (..))
 norm :: Floating a => (a,a,a) -> a
 norm (x,y,z) = sqrt(x*x + y*y + z*z)
 
+norm' :: Floating a => (a,a,a) -> (a,a,a) -> a
+norm' (ox,oy,oz) (x,y,z) = norm (x-ox, y-oy, z-oz)
+
 normalize :: Floating a => (a,a,a) -> (a,a,a)
 normalize (x,y,z) = (x/n,y/n,z/n)
   where
@@ -45,9 +48,19 @@ triangleNormal ((x1,x2,x3), (y1,y2,y3), (z1,z2,z3)) =
   where
     abc = crossProd (y1-x1, y2-x2, y3-x3) (z1-x1, z2-x2, z3-x3)
 
+triangleNormal' :: Floating a => ((a,a,a),(a,a,a),(a,a,a)) -> (a,a,a)
+triangleNormal' ((x1,x2,x3), (y1,y2,y3), (z1,z2,z3)) = normalize abc
+  where
+    abc = crossProd (y1-x1, y2-x2, y3-x3) (z1-x1, z2-x2, z3-x3)
+
 triangleNegNormal :: Floating a => ((a,a,a),(a,a,a),(a,a,a)) -> Normal3 a
 triangleNegNormal ((x1,x2,x3), (y1,y2,y3), (z1,z2,z3)) =
   tripletToNegNormal3 (normalize abc)
+  where
+    abc = crossProd (y1-x1, y2-x2, y3-x3) (z1-x1, z2-x2, z3-x3)
+
+triangleNegNormal' :: Floating a => ((a,a,a),(a,a,a),(a,a,a)) -> (a,a,a)
+triangleNegNormal' ((x1,x2,x3), (y1,y2,y3), (z1,z2,z3)) = negNormalize abc
   where
     abc = crossProd (y1-x1, y2-x2, y3-x3) (z1-x1, z2-x2, z3-x3)
 

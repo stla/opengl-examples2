@@ -32,6 +32,8 @@ library
                      , LinkedCyclides
                      , LinkedCyclides.Data2
                      , LinkedCyclides2
+                     , LinkedCyclides.Data3
+                     , LinkedCyclides3
                      , CompoundFiveTetrahedra.Data
                      , CompoundFiveTetrahedra
                      , Utils.Triplets

@@ -28,6 +28,8 @@ Linked cyclides:
 
 ![gfycat](https://thumbs.gfycat.com/PositiveDistantDove-size_restricted.gif)
 
+![gfycat](https://thumbs.gfycat.com/NeighboringScientificHawaiianmonkseal-size_restricted.gif)
+
 Compound of five tetrahedra:
 
 ![gfycat](https://thumbs.gfycat.com/DisfiguredAngelicCuckoo-size_restricted.gif)

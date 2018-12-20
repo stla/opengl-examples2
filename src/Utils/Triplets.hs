@@ -68,9 +68,15 @@ middle :: Floating a => (a,a,a) -> (a,a,a) -> (a,a,a)
 middle (x1,y1,z1) (x2,y2,z2) = ((x1+x2)/2, (y1+y2)/2, (z1+z2)/2)
 
 rotationY :: Floating a => a -> (a,a,a) -> (a,a,a)
-rotationY a (x,y,z) = 
+rotationY a (x,y,z) =
   (
     cos a * x + sin a * z
   , y
   , cos a * z - sin a * x
   )
+
+add :: Floating a => (a,a,a) -> (a,a,a) -> (a,a,a)
+add (x1,y1,z1) (x2,y2,z2) = (x1+x2, y1+y2, z1+z2)
+
+scale :: Floating a => a -> (a,a,a) -> (a,a,a)
+scale mu (x,y,z) = (mu*x, mu*y, mu*z)

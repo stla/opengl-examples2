@@ -59,6 +59,8 @@ library
                      , IcosahedronInOctahedron
                      , CompoundFiveOctahedra.Data
                      , CompoundFiveOctahedra
+                     , ToroidalHelix.Data
+                     , ToroidalHelix
   build-depends:       base >= 4.7 && < 5
                      , OpenGL
                      , GLUT

@@ -69,3 +69,7 @@ Icosahedron within octahedron:
 Compound of five octahedra:
 
 ![gfycat](https://thumbs.gfycat.com/WeightyBlondAmericanwigeon-size_restricted.gif)
+
+Toroidal helix:
+
+![gfycat](https://thumbs.gfycat.com/BrokenLonelyAxolotl-size_restricted.gif)
